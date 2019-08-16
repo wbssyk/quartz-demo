@@ -1,7 +1,10 @@
+spring:
+  profiles:
+    active: dev1
 ---
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/shiyakun?characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/quartz?characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
@@ -14,7 +17,7 @@ server:
 ---
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/shiyakun?characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/quartz?characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
@@ -24,4 +27,4 @@ mybatis:
   type-aliases-package: com.shi.quartzdemo.entity
 server:
   port: 20001
-    
+

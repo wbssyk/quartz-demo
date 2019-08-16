@@ -18,6 +18,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * @Author yakun.shi
+ * @Description //具体要执行的任务
+ * @Date 2019/6/21 10:26
+ **/
 @Component
 public class Job2 implements BaseJob {
   
@@ -30,6 +35,6 @@ public class Job2 implements BaseJob {
         throws JobExecutionException {
         JdbcTemplate jdbcTemplate = SpringUtil.getBean(JdbcTemplate.class);
         _log.error("New Job执行时间: " + new Date());
-        jdbcTemplate.execute("insert into company (NAME,PEMPLE_NUM) values (99,999)");
+//        jdbcTemplate.execute("insert into company (NAME,PEMPLE_NUM) values (99,999)");
     }  
 }  

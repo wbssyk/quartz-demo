@@ -4,6 +4,7 @@ import com.shi.quartzdemo.controller.api.JobRequest;
 import com.shi.quartzdemo.job.BaseJob;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.Map;
 public class JobUtils {
 
     @Autowired
+    @Qualifier("scheduler")
     private Scheduler scheduler;
 
 
@@ -37,7 +39,7 @@ public class JobUtils {
         }
         // 启动调度器
 //        scheduler.start();
-        //构建job信息
+        // 构建job信息
         JobDetail jobDetail = JobBuilder.newJob(getJobClass(request.getJobName()))
                 .withIdentity(request.getJobName(), request.getJobGroupName()).build();
         //表达式调度构建器(即任务执行的时间)
@@ -133,10 +135,7 @@ public class JobUtils {
      * @Param [request]
      **/
     public String deleteJob(JobRequest request) throws SchedulerException {
-//
-//        scheduler.pauseTrigger(TriggerKey.triggerKey(jobClassName, jobGroupName));
-//        scheduler.unscheduleJob(TriggerKey.triggerKey(jobClassName, jobGroupName));
-//        scheduler.deleteJob(JobKey.jobKey(jobClassName, jobGroupName));
+
         JobKey jobKey = new JobKey(request.getJobName(), request.getJobGroupName());
         JobDetail jobDetail = scheduler.getJobDetail(jobKey);
         if (jobDetail == null) {

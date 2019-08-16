@@ -15,6 +15,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+/**
+ * @Author
+ * @Author yakun.shi
+ * @Description //具体要执行的任务
+ * @Date 2019/6/21 10:26
+ **/
+
 @Component
 public class Job1 implements BaseJob {
     private static final Map<MessageQueue, Long> offsetTable = new HashMap<MessageQueue, Long>();
@@ -24,44 +31,45 @@ public class Job1 implements BaseJob {
     public void execute(JobExecutionContext context)
             throws JobExecutionException {
         _log.error("Hello Job执行时间: " + new Date());
-        DefaultMQPullConsumer consumer = new DefaultMQPullConsumer("pullConsumer");
-        consumer.setNamesrvAddr("192.168.1.200:9876;192.168.1.201:9876;192.168.1.202:9876");
-        try {
-            consumer.start();
-            Set<MessageQueue> mqs = consumer.fetchSubscribeMessageQueues("Topic-3");
-            for (MessageQueue mq : mqs) {
-                System.out.println("Consume from the queue: " + mq);
-                //	long offset = consumer.fetchConsumeOffset(mq, true);
-                //	PullResultExt pullResult =(PullResultExt)consumer.pull(mq, null, getMessageQueueOffset(mq), 32);
-                //消息未到达默认是阻塞10秒，private long consumerPullTimeoutMillis = 1000 * 10;
-                PullResultExt pullResult = (PullResultExt) consumer.pullBlockIfNotFound(mq, null, getMessageQueueOffset(mq), 2);
-                putMessageQueueOffset(mq, pullResult.getNextBeginOffset());
-                switch (pullResult.getPullStatus()) {
-                    case FOUND:
-                        List<MessageExt> messageExtList = pullResult.getMsgFoundList();
-                        for (MessageExt m : messageExtList) {
-                            System.out.println(new String(m.getBody()));
-                        }
-                        break;
-                    case NO_MATCHED_MSG:
-                        break;
-                    case NO_NEW_MSG:
-                        break;
-                    case OFFSET_ILLEGAL:
-                        break;
-                    default:
-                        break;
-                }
-            }
-        } catch (MQClientException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (RemotingException e) {
-            e.printStackTrace();
-        } catch (MQBrokerException e) {
-            e.printStackTrace();
-        }
+//        DefaultMQPullConsumer consumer = new DefaultMQPullConsumer("rocketmq-shiyakun");
+//        consumer.setNamesrvAddr("192.168.1.200:9876;192.168.1.201:9876;192.168.1.202:9876");
+//        try {
+//            consumer.start();
+//            Set<MessageQueue> mqs = consumer.fetchSubscribeMessageQueues("Topic-1");
+//            for (MessageQueue mq : mqs) {
+//                System.out.println("Consume from the queue: " + mq);
+//                //	long offset = consumer.fetchConsumeOffset(mq, true);
+//                //	PullResultExt pullResult =(PullResultExt)consumer.pull(mq, null, getMessageQueueOffset(mq), 32);
+//                //消息未到达默认是阻塞10秒，private long consumerPullTimeoutMillis = 1000 * 10;
+//                PullResultExt pullResult = (PullResultExt) consumer.pullBlockIfNotFound(mq, null, getMessageQueueOffset(mq), 32);
+//                putMessageQueueOffset(mq, pullResult.getNextBeginOffset());
+//                SINGLE_MQ:
+//                switch (pullResult.getPullStatus()) {
+//                    case FOUND:
+//                        List<MessageExt> messageExtList = pullResult.getMsgFoundList();
+//                        for (MessageExt m : messageExtList) {
+//                            System.out.println(new String(m.getBody()));
+//                        }
+//                        break;
+//                    case NO_MATCHED_MSG:
+//                        break;
+//                    case NO_NEW_MSG:
+//                        break SINGLE_MQ;
+//                    case OFFSET_ILLEGAL:
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        } catch (MQClientException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (RemotingException e) {
+//            e.printStackTrace();
+//        } catch (MQBrokerException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
