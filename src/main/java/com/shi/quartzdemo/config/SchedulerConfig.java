@@ -67,17 +67,17 @@ public class SchedulerConfig {
 
     @Configuration
     class MyServletConfig{
-        @Bean
-        @ConditionalOnMissingBean(name = "zuulServlet")
-        public ServletRegistrationBean zuulServlet() {
-            ServletRegistrationBean<TestServleet> servlet = new ServletRegistrationBean<>(new TestServleet(),
-                    "/*");
-            // The whole point of exposing this servlet is to provide a route that doesn't
-            // buffer requests.
-            servlet.addInitParameter("buffer-requests", "false");
-            System.out.println("111111111111111111111111");
-            return servlet;
-        }
+//        @Bean
+//        @ConditionalOnMissingBean(name = "zuulServlet")
+//        public ServletRegistrationBean zuulServlet() {
+//            ServletRegistrationBean<TestServleet> servlet = new ServletRegistrationBean<>(new TestServleet(),
+//                    "/*");
+//            // The whole point of exposing this servlet is to provide a route that doesn't
+//            // buffer requests.
+//            servlet.addInitParameter("buffer-requests", "false");
+//            System.out.println("111111111111111111111111");
+//            return servlet;
+//        }
 
         @Bean("test")
         @lalal

@@ -18,10 +18,7 @@ import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 
 import static com.netflix.client.config.CommonClientConfigKey.ListOfServers;
 
@@ -58,27 +55,11 @@ public class Test  extends TestDi{
 //    }
 
     public static void main(String[] args) throws Exception{
-
-        ConfigurationManager.loadPropertiesFromResources("client.properties");
-
-//        System.out.println(ConfigurationManager.getConfigInstance().getProperty("sample-client.ribbon.listOfServers"));
-
-        RestClient client = (RestClient) ClientFactory.getNamedClient("sample-client");
-        HttpRequest request = HttpRequest.newBuilder().uri(new URI("/")).build();
-        for (int i = 0; i < 20; i++) {
-            HttpResponse response = client.executeWithLoadBalancer(request);
-            System.out.println("Status code for " + response.getRequestedURI() + "  :" + response.getStatus());
-        }
-        ZoneAwareLoadBalancer lb = (ZoneAwareLoadBalancer) client.getLoadBalancer();
-        System.out.println(lb.getLoadBalancerStats());
-
-        System.out.println("changing servers ...");
-        Thread.sleep(3000);
-        for (int i = 0; i < 20; i++) {
-            HttpResponse response = client.executeWithLoadBalancer(request);
-            System.out.println("Status code for " + response.getRequestedURI() + "  : " + response.getStatus());
-        }
-        System.out.println(lb.getLoadBalancerStats()); // 6
-
+        ServerSocket serverSocket = new ServerSocket();
+        serverSocket.bind(new InetSocketAddress("127.0.0.1",3000));
+        Socket accept = serverSocket.accept();
+        InputStream inputStream = accept.getInputStream();
+        accept.close();
+        serverSocket.close();
     }
 }
